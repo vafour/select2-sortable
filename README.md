@@ -1,4 +1,4 @@
 select2-sortable
 ================
 
-The little plugin will make select2 multiple select become sortable out of the box.
+A little plugin that will make [select2](https://github.com/ivaynberg/select2) multiple select become sortable out of the box.
