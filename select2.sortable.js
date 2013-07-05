@@ -30,19 +30,30 @@
 			sorted.push.apply(sorted, unselected);
 			return sorted;
 		},
-		select2Sortable: function(){
+		select2Sortable: function(customSortableOptions){
 			var $this = this.filter('[multiple]');
+
+            var defaultSortableOptions = {
+                'placeholder' : 'ui-state-highlight',
+                'items'       : 'li:not(.select2-search-field)',
+                'tolerance'   : 'pointer'
+            };
+
+            if(!customSortableOptions){
+                customSortableOptions = {};
+            }
+
+            console.dir(defaultSortableOptions);
+            console.dir(customSortableOptions);
+            var sortableOptions = $.extend(defaultSortableOptions, customSortableOptions);
+            console.dir(sortableOptions);
 
 			$this.each(function(){
 				var $select  = $(this);
 				var $select2 = $select.siblings('.select2-container');
 
 				// Init jQuery UI Sortable
-				$select2.find('.select2-choices').sortable({
-					'placeholder' : 'ui-state-highlight',
-					'items'       : 'li:not(.select2-search-field)',
-					'tolerance'   : 'pointer'
-				});
+				$select2.find('.select2-choices').sortable(sortableOptions);
 
 				// Apply options ordering in form submit
 				$select.closest('form').unbind('submit.select2sortable').on('submit.select2sortable', function(){
