@@ -43,10 +43,7 @@
                 customSortableOptions = {};
             }
 
-            console.dir(defaultSortableOptions);
-            console.dir(customSortableOptions);
             var sortableOptions = $.extend(defaultSortableOptions, customSortableOptions);
-            console.dir(sortableOptions);
 
 			$this.each(function(){
 				var $select  = $(this);
