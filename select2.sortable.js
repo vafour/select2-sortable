@@ -84,7 +84,7 @@
 			$this.each(function(){
 				var $select  = $(this);
 
-				// apply options ordering and unbind form submit event
+				// unbind form submit event
 				$select.closest('form').unbind('submit.select2sortable');
 
 				// destroy select2
