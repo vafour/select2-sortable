@@ -33,17 +33,17 @@
 		select2Sortable: function(customSortableOptions){
 			var $this = this.filter('[multiple]');
 
-            var defaultSortableOptions = {
-                'placeholder' : 'ui-state-highlight',
-                'items'       : 'li:not(.select2-search-field)',
-                'tolerance'   : 'pointer'
-            };
-
-            if(!customSortableOptions){
-                customSortableOptions = {};
-            }
-
-            var sortableOptions = $.extend(defaultSortableOptions, customSortableOptions);
+            		var defaultSortableOptions = {
+				'placeholder' : 'ui-state-highlight',
+				'items'       : 'li:not(.select2-search-field)',
+				'tolerance'   : 'pointer'
+			};
+			
+			if(!customSortableOptions){
+				customSortableOptions = {};
+			}
+			
+			var sortableOptions = $.extend(defaultSortableOptions, customSortableOptions);
 
 			$this.each(function(){
 				var $select  = $(this);
