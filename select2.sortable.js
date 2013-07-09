@@ -10,29 +10,36 @@
 (function($){
 	$.fn.extend({
 		select2SortableOrder: function(){
-			var $this      = this.filter('[multiple]').first(),
-			    $select2   = $this.siblings('.select2-container'),
-			    unselected = [],
-			    sorted;
+			var $this = this.filter('[multiple]');
 
-			$this.find('option').each(function(){
-				!this.selected && unselected.push(this);
-			});
+			$this.each(function(){
+				var $select  = $(this);
 
-			sorted = $($select2.find('.select2-choices li[class!="select2-search-field"]').map( function() {
-				if (!this) {
-					return undefined;
+				// skip elements not select2-ed
+				if(typeof($select.data('select2')) !== 'object'){
+					return false;
 				}
-				var text = $.trim($(this).text());
-				return $this.find('option').filter(function () { return $(this).html() == text; })[0];
-			}));
 
-			sorted.push.apply(sorted, unselected);
+				var $select2 = $select.siblings('.select2-container'),
+				    unselected = [],
+				    sorted;
 
-			$this.children().remove();
-			$this.append(sorted);
-			$this.select2sortableDestroy();
-			$this.select2Sortable();
+				$select.find('option').each(function(){
+					!this.selected && unselected.push(this);
+				});
+
+				sorted = $($select2.find('.select2-choices li[class!="select2-search-field"]').map( function() {
+					if (!this) {
+						return undefined;
+					}
+					var text = $.trim($(this).text());
+					return $select.find('option').filter(function () { return $(this).html() == text; })[0];
+				}));
+
+				sorted.push.apply(sorted, unselected);
+				$select.children().remove();
+				$select.append(sorted);
+			});
 
 			return $this;
 		},
@@ -51,11 +58,14 @@
 
 				var sortableOptions = $.extend(defaultSortableOptions, args[0]);
 
-				$this.select2();
+				// Init select2 only if not already initialized to prevent select2 configuration loss
+				if(typeof($this.data('select2')) !== 'object'){
+					$this.select2();
+				}
 
 				$this.each(function(){
-					var $select  = $(this);
-					var $select2 = $select.siblings('.select2-container');
+					var $select  = $(this),
+					    $select2 = $select.siblings('.select2-container');
 
 					// Init jQuery UI Sortable
 					$select2.find('.select2-choices').sortable(sortableOptions);
@@ -74,21 +84,21 @@
 				}
 				if(args[0] === 'destroy')
 				{
-					$this.select2sortableDestroy();
+					$this.select2SortableDestroy();
 				}
 			}
 			return $this;
 		},
-		select2sortableDestroy: function(){
+		select2SortableDestroy: function(){
 			var $this = this.filter('[multiple]');
 			$this.each(function(){
-				var $select  = $(this);
+				var $select = $(this);
 
 				// unbind form submit event
 				$select.closest('form').unbind('submit.select2sortable');
 
-				// destroy select2
-				$this.select2('destroy');
+				// destroy select2Sortable
+				$select.parent().find('.select2-choices').sortable('destroy');
 			});
 			return $this;
 		}
