@@ -32,8 +32,8 @@
 					if (!this) {
 						return undefined;
 					}
-					var text = $.trim($(this).text());
-					return $select.find('option').filter(function () { return $(this).html() == text; })[0];
+					var id = $(this).data('select2Data').id;
+                    			return $select.find('option[value="' + id + '"]')[0];
 				}));
 
 				sorted.push.apply(sorted, unselected);
