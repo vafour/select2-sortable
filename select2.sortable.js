@@ -33,7 +33,7 @@
 						return undefined;
 					}
 					var id = $(this).data('select2Data').id;
-                    			return $select.find('option[value="' + id + '"]')[0];
+					return $select.find('option[value="' + id + '"]')[0];
 				}));
 
 				sorted.push.apply(sorted, unselected);
@@ -79,8 +79,8 @@
 								$select.select2SortableOrder();
 							});
 							$select.on('change', function(e){
-					                	$(this).select2SortableOrder();
-					               	})
+								$(this).select2SortableOrder();
+							});
 							break;
 						default:
 							// apply options ordering in form submit
